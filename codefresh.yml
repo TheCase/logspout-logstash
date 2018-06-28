@@ -1,0 +1,30 @@
+version: '1.0'
+
+steps:
+  build_image:
+    title: Build Image
+    type: build
+    image_name: sctechdev/${{CF_REPO_NAME}}
+    dockerfile: Dockerfile
+    tag: ${{CF_BRANCH}}-${{CF_SHORT_REVISION}}
+    build_arguments:
+      - projectname=${{CF_REPO_NAME}}
+
+  push_to_nexus_latest:
+    title: Push to Nexus Repo (latest)
+    type: push
+    candidate: ${{build_image}}
+    tag: latest
+    registry: sonatype-docker-internal
+    when:
+      branch:
+        only:
+          - master
+
+  push_to_nexus_branch_rev:
+    title: Push to Nexus Repo (branch + revision)
+    type: push
+    candidate: ${{build_image}}
+    #tag: ${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}
+    tag: ${{CF_BRANCH_TAG_NORMALIZED}}
+    registry: sonatype-docker-internal
