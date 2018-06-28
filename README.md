@@ -1,3 +1,8 @@
+
+NOTE - this is a build that has the k8s and multiline changes incorporated from 
+
+https://github.com/daniilyar/logspout-logstash
+
 # Custom Logspout Builds
 
 Forking logspout to change modules is unnecessary! Instead, you can create an
